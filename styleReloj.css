@@ -61,7 +61,6 @@ main{
     display: flex;
     flex-direction: column;
     width: 27%;
-    color: #b71c1c;
 }
 #date{
     display: flex;
@@ -88,8 +87,10 @@ main{
 /* Style Div Calendar */
 .calendarDate{
     position: absolute;
-    left: 30%;
+    left: 34%;
     display: flex;
+    flex-direction: column;
+    width: 50%;
 }
 #calendar{
     font-size: medium;
@@ -100,6 +101,10 @@ main{
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.1s ease;
+}
+.calendar{
+    opacity: 0;
 }
 .headerCalendar{
     display: flex;
@@ -117,6 +122,39 @@ main{
     height: 30px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
-.weekdays{
+tr{
+    display: flex;
+    justify-content: space-around;
+}
+.day{
     width: 100%;
+}
+.dates{
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    gap: 5px;
+}
+.date{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    margin: auto;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 20%;
+    transition: 0.2s;
+}
+
+.date:hover,
+.date.active{
+    background: #ff5869;
+    color: #FFFBDE;
+}
+.date.inactive{
+    color: #d2d2d2;
+}
+.date.inactive:hover{
+    color: #FFFBDE;
 }
