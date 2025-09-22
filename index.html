@@ -16,7 +16,7 @@
                             <div id="clock"></div>
                         </div>
                         <div class="calendarDate">
-                            <div id="calendar">
+                            <div id="calendar" class="calendar">
                             <div class="headerCalendar">
                                 <button id="prevBtn">
                                     <i class=""></i> <!-- iCONO -->
@@ -26,25 +26,12 @@
                                     <i class=""></i> <!-- iCONO -->
                                 </button>
                             </div>
-                            <table class="WeekDays">
-                                <thead>
-                                    <tr>
-                                        <th class="day">Domingo</th>
-                                        <th class="day">Lunes</th>
-                                        <th class="day">Martes</th>
-                                        <th class="day">Miercoles</th>
-                                        <th class="day">Jueves</th>
-                                        <th class="day">Viernes</th>
-                                        <th class="day">Sabado</th>
+                            <table id="weekDays" class="weekDays">
+                                    <tr id="weekRow" class="weekRow">
                                     </tr>
-                                </thead>
-                                <div class="dates" id="dates"></div>
-                                <tbody>
-
-                                </tbody>
                             </table>
+                            <div class="dates" id="dates"></div>
                             </div>
-                            <div id="events"></div>
                         </div>
                         <button class="btnClock" id="btnClock"><span>HORA</span></button>
                         <button class="btnCalendar" id="btnCalendar"><span>CALENDARIO</span></button>
