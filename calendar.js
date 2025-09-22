@@ -1,21 +1,27 @@
 const d = document;
 
 d.addEventListener("DOMContentLoaded", (e) => {
-    function digitalCalendar(clock, dayAll , calendar, btnPlayClock, btnPlayCalendar){
+    function digitalCalendar(clock, dayAll , btnPlayClock, calendar ,btnPlayCalendar, weekDays, mothYearElement, datesElement, prevMothBtn, nextMothBtn){
         let clockTempo = null;
+        let currentDate = new Date();
         const $container = d.querySelectorAll(".container button"),
             $btnPlayClock = d.querySelector(btnPlayClock),
-            $btnPlayCalendar = d.querySelector(btnPlayCalendar);
+            $btnPlayCalendar = d.querySelector(btnPlayCalendar),
+            $calendar = d.querySelector(calendar),
+            $weekDays = d.querySelector(weekDays),
+            $mothYear = d.querySelector(mothYearElement),
+            $dateElement = d.querySelector(datesElement),
+            $prevMothBtn = d.querySelector(prevMothBtn),
+            $nextMothBtn = d.querySelector(nextMothBtn);
         //Verifica si el botón existe antes de agregar el event listener
 
         function updateDisplay(){
             const date = new Date();
                 const amPm = date.toLocaleTimeString("en-US", { hour12: true}).split(" ")[1];
-                const [hour, minutes, seconds, week, day, month, year] = [
+                const [hour, minutes, seconds, day, month, year] = [
                     date.getHours(),
                     date.getMinutes(),
                     date.getSeconds(),
-                    date.getDay(),
                     date.getDate(),
                     date.getMonth()+1,
                     date.getFullYear(), 
@@ -24,10 +30,54 @@ d.addEventListener("DOMContentLoaded", (e) => {
                 d.querySelector(dayAll).innerHTML = `<p>Dia:${day} Mes:${month} año:${year}</p>`
         };
 
+        function weekDaysArray () {
+            const days = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+            for(i = 0; i < days.length; i++){
+                    let th = d.createElement("th");
+                    th.className = "day";
+                    th.textContent = days[i];
+                    $weekDays.appendChild(th);
+                }
+        }
         function updateCalendar(){
-            d.querySelector(calendar).innerHTML = `<h2>Calendario</h2>`;
-        };
+            const currentYear = currentDate.getFullYear(),
+                currentMonth = currentDate.getMonth(),
+                firstDay = new Date(currentYear, currentMonth, 0),
+                lastDay = new Date(currentYear, currentMonth + 1, 0);
 
+                const mothYearString = currentDate.toLocaleString("default", {month: "long", year: "numeric"});
+                $mothYear.textContent = mothYearString;
+
+                let datesHTML = "";
+                let i;
+
+                for(i = firstDay.getDay(); i > 0; i--){
+                    const prevDate = new Date(currentYear, currentMonth, 0 - i + 1);
+                    datesHTML += `<div class="date inactive"> ${prevDate.getDate()}</div>`;
+                }
+                for(i = 1; i <= lastDay.getDate(); i++){
+                    const date = new Date(currentYear, currentMonth, i);
+                    const activeClass = date.toDateString() === new Date().toDateString() ? "active" : "";
+                    datesHTML += `<div class="date ${activeClass}">${i}</div>`;
+                }
+                for(i = 1; i <= 7 - lastDay.getDay(); i++){
+                    const nextDate = new Date(currentYear, currentMonth + 1, i);
+                    datesHTML += `<div class="date inactive">${nextDate.getDate()}</div>`;
+                }
+
+                $dateElement.innerHTML = datesHTML;
+            
+        }
+            $prevMothBtn.addEventListener("click", () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                updateCalendar();
+            });
+            $nextMothBtn.addEventListener("click", () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                updateCalendar();
+            });
+
+        
         $btnPlayClock.addEventListener("click", (ev) =>{
             const btn = ev.currentTarget,
                 running = btn.classList.contains("active");
@@ -53,11 +103,13 @@ d.addEventListener("DOMContentLoaded", (e) => {
             
         });
         $btnPlayCalendar.addEventListener("click", (ev) => {
-            const btn = ev.currentTarget,
+               const btn = ev.currentTarget,
                 running = btn.classList.contains("active2");
-            
+
             if(!running){
-                /* updateCalendar(); */
+                $calendar.classList.remove("calendar");
+                updateCalendar();
+                weekDaysArray();
                 ev.stopPropagation();
                 $container.forEach(button => {
                     button.classList.add("active2");
@@ -65,13 +117,18 @@ d.addEventListener("DOMContentLoaded", (e) => {
             }else{
                 setTimeout(() => {
                     clearInterval(clockTempo);
-                    /* d.querySelector(calendar).innerHTML = null; */
-                }, 600);
+                    $calendar.classList.add("calendar");
+                    d.querySelector(weekDays).innerHTML = null;
+                    d.querySelector(mothYearElement).innerHTML = null;
+                    d.querySelector(datesElement).innerHTML = null;
+                    d.querySelector(prevMothBtn).innerHTML = null;
+                    d.querySelector(nextMothBtn).innerHTML = null;
+                },1000);
                 $container.forEach(button => {
                     button.classList.remove("active2");
                 });
             }
         });
     };
-    digitalCalendar("#clock", "#date" , "#calendar", "#btnClock", "#btnCalendar");
+    digitalCalendar("#clock", "#date" , "#btnClock", "#calendar", "#btnCalendar", "#weekRow","#mothYear", "#dates", "#prevBtn" ,"#nextBtn");
 });
