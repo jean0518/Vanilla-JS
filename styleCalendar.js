@@ -24,8 +24,11 @@ main{
     overflow: hidden;
     align-items: center;
 }
-.container .btnClock,
-.container .btnCalendar {
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFBDE;
     cursor: pointer;
     width: 100%;
     height: 500px;
@@ -36,21 +39,17 @@ main{
     transform: skew(-10deg) translateX(0%);
     transition: all 1s ease;
 }
-.container .btnClock > *,
-.container .btnCalendar > * {
+.button > * {
     display: inline-block;
     transform: skew(10deg);
 }
-.container .btnClock:hover,
-.container .btnCalendar:hover{
+.button:hover{
     background-color: #90D1CA;
 }
-.container .btnClock.active,
-.container .btnCalendar.active{
+.button.active{
     transform: skew(-10deg) translateX(160%);
 }
-.container .btnClock.active2,
-.container .btnCalendar.active2{
+.button.active2{
     transform: skew(-10deg) translateX(-160%);
 }
 

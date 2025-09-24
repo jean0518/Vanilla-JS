@@ -1,10 +1,10 @@
 const d = document;
 
-d.addEventListener("DOMContentLoaded", (e) => {
+d.addEventListener("DOMContentLoaded", () => {
     function digitalCalendar(clock, dayAll , btnPlayClock, calendar ,btnPlayCalendar, weekDays, mothYearElement, datesElement, prevMothBtn, nextMothBtn){
         let clockTempo = null;
         let currentDate = new Date();
-        const $container = d.querySelectorAll(".container button"),
+        const $container = d.querySelectorAll(".container .button"),
             $btnPlayClock = d.querySelector(btnPlayClock),
             $btnPlayCalendar = d.querySelector(btnPlayCalendar),
             $calendar = d.querySelector(calendar),
@@ -85,19 +85,27 @@ d.addEventListener("DOMContentLoaded", (e) => {
             if(!running){
                 clockTempo = setInterval(() => {
                     updateDisplay();
-                }, 0);
+                },0);
                 ev.stopPropagation();
                 $container.forEach(button => {
                     button.classList.add("active");
+                        button.style.pointerEvents = "none";
+                    setTimeout(() => {
+                        button.style.pointerEvents = "auto";
+                    },1000)
                 });
             }else{
                 setTimeout(() => {
                     clearInterval(clockTempo);
                     d.querySelector(clock).innerHTML = null;
                     d.querySelector(dayAll).innerHTML = null;
-                }, 600);
+                }, 1000);
                 $container.forEach(button => {
                     button.classList.remove("active");
+                    button.style.pointerEvents = "none";
+                    setTimeout(() => {
+                        button.style.pointerEvents = "auto";
+                    },1000)
                 });
             }
             
@@ -113,10 +121,14 @@ d.addEventListener("DOMContentLoaded", (e) => {
                 ev.stopPropagation();
                 $container.forEach(button => {
                     button.classList.add("active2");
+                    button.style.pointerEvents = "none";
+                    setTimeout(() => {
+                        button.style.pointerEvents = "auto";
+                    },1000)
                 });
             }else{
                 setTimeout(() => {
-                    clearInterval(clockTempo);
+                    /* clearInterval(clockTempo); */
                     $calendar.classList.add("calendar");
                     d.querySelector(weekDays).innerHTML = null;
                     d.querySelector(mothYearElement).innerHTML = null;
@@ -126,6 +138,10 @@ d.addEventListener("DOMContentLoaded", (e) => {
                 },1000);
                 $container.forEach(button => {
                     button.classList.remove("active2");
+                    button.style.pointerEvents = "none";
+                    setTimeout(() => {
+                        button.style.pointerEvents = "auto";
+                    },1000)
                 });
             }
         });
